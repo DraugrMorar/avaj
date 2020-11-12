@@ -6,6 +6,7 @@ public class Avaj {
 
     static WeatherTower weatherTower;
     static PrintStream o;
+    static PrintStream console = System.out;
     static {
         try {
             o = new PrintStream(new File("A.txt"));
@@ -23,7 +24,6 @@ public class Avaj {
     }
 
     public static void error(String message) {
-        PrintStream console = new PrintStream(System.out);
         System.setOut(console);
         System.out.println(message);
         System.exit(0);
@@ -40,7 +40,7 @@ public class Avaj {
         }
         try {
             String buff = br.readLine();
-            if(validateFirstString(buff)) {
+            if (buff != null && buff.matches("\\d+") && buff.length() < 10) {
                 cycles = Long.parseLong(buff);
                 if (cycles > Integer.MAX_VALUE || cycles <= 0) {
                     error("Error. Not valid first line");
@@ -64,41 +64,29 @@ public class Avaj {
         }
     }
 
-    private static boolean validateFirstString(String buff) {
-        if (buff == null || buff.length() == 0 || buff.contains(" ") || buff.contains(".")) {
-            return false;
-        }
-        for (int i = 0; i < buff.length(); i++) {
-            if ((buff.charAt(i) > 47 && buff.charAt(i) < 58)) {
-                i++;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private static void createAircraft(String text) throws FileNotFoundException {
         long latitude;
         long longitude;
         long height;
         if (text!= null && !text.isEmpty()) {
-            String[] aircraft = text.split(" ");
+            String[] aircraft = text.split("\\s+");
             if (aircraft.length != 5 || aircraft[1].isEmpty()) {
                 error("Not valid string " + text);
             }
-            if (aircraft[0].equals("Baloon") || aircraft[0].equals("JetPlane") || aircraft[0].equals("Helicopter")) {
-                if (validateFirstString(aircraft[2]) && validateFirstString(aircraft[3]) && validateFirstString(aircraft[4])) {
+            if ((aircraft[0].equals("Baloon") || aircraft[0].equals("JetPlane") || aircraft[0].equals("Helicopter")) &&
+                    (aircraft[2].matches("\\d+") && aircraft[3].matches("\\d+") && aircraft[4].matches("\\d+"))) {
                     latitude= Long.parseLong(aircraft[2]);
                     longitude = Long.parseLong(aircraft[3]);
                     height = Long.parseLong(aircraft[4]);
-                    if (latitude > Integer.MAX_VALUE || longitude > Integer.MAX_VALUE) {
+                    if (latitude > Integer.MAX_VALUE || longitude > Integer.MAX_VALUE || height > Integer.MAX_VALUE) {
                         error("Wrong coordinates " + latitude + " " + longitude + " " + height);
                     }
+                    if (height > 100) {
+                        height = 100;
+                    }
                     AircraftFactory.newAircraft(aircraft[0], aircraft[1], (int)latitude, (int)longitude, (int)height).registerTower(weatherTower);
-                }
             } else {
-                error("Wrong line " + aircraft[0]);
+                error("Wrong line " + text);
             }
         }
     }

@@ -1,1 +1,2 @@
-Not valid string Baloon B1 2 3 20 23
+Tower says: Baloon#B1(0)  registered to weather tower.
+Tower says: Baloon#B2(0)  registered to weather tower.

@@ -8,7 +8,6 @@ public class Tower {
 
     public void register(Flyable flyable) {
         observers.add(flyable);
-        System.out.println(observers.size());
     }
 
     public void unregister(Flyable flyable) {
@@ -16,9 +15,8 @@ public class Tower {
     }
 
     protected void conditionsChanged() {
-        System.out.println(observers);
-        for(Flyable fly: observers){
-            fly.updateConditions();
+        for(int i = 0; i < observers.size(); i++){
+            observers.get(i).updateConditions();
         }
     }
 }

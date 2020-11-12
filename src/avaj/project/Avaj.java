@@ -4,7 +4,16 @@ import java.io.*;
 
 public class Avaj {
 
-    static WeatherTower weatherTower = new WeatherTower();
+    static WeatherTower weatherTower;
+    static PrintStream o;
+    static {
+        try {
+            o = new PrintStream(new File("A.txt"));
+            System.setOut(o);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         if (args.length == 1) {
             read_from_file(args[0]);
@@ -39,8 +48,11 @@ public class Avaj {
             } else {
                 error("Error. First line.");
             }
+            weatherTower = new WeatherTower();
+
             while (buff != null) {
                 buff = br.readLine();
+
                 createAircraft(buff);
             }
             while(cycles > 0) {
@@ -83,7 +95,7 @@ public class Avaj {
                     if (latitude > Integer.MAX_VALUE || longitude > Integer.MAX_VALUE) {
                         error("Wrong coordinates " + latitude + " " + longitude + " " + height);
                     }
-                    weatherTower.register(AircraftFactory.newAircraft(aircraft[0], aircraft[1], (int)latitude, (int)longitude, (int)height));
+                    AircraftFactory.newAircraft(aircraft[0], aircraft[1], (int)latitude, (int)longitude, (int)height).registerTower(weatherTower);
                 }
             } else {
                 error("Wrong line " + aircraft[0]);

@@ -1,3 +1,5 @@
+package avaj.project;
+
 public class Baloon extends Aircraft implements Flyable {
 
     private WeatherTower weatherTower;
@@ -8,7 +10,7 @@ public class Baloon extends Aircraft implements Flyable {
 
     @Override
     public void updateConditions() {
-        switch (weatherTower.getWeather(coordinates)) {
+        switch (this.weatherTower.getWeather(coordinates)) {
             case "SUN":
                 coordinates = new Coordinates(coordinates.getLongitude() + 2, coordinates.getLatitude(), coordinates.getHeight() + 4);
                 break;
@@ -23,14 +25,16 @@ public class Baloon extends Aircraft implements Flyable {
                 break;
         }
         if(coordinates.getHeight() > 100) {
-            coordinates.setHeight(100);
+            coordinates = new Coordinates(coordinates.getLongitude(), coordinates.getLatitude(), 100);
         } else if (coordinates.getHeight() <= 0) {
-            weatherTower.unregister(this);
+            this.weatherTower.unregister(this);
         }
     }
 
     @Override
     public void registerTower(WeatherTower weatherTower) {
-        weatherTower.register(this);
+        this.weatherTower = weatherTower;
+        this.weatherTower.register(this);
+//        weatherTower.register(this);
     }
 }

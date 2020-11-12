@@ -1,3 +1,5 @@
+package avaj.project;
+
 public class JetPlane extends Aircraft implements Flyable {
 
     private WeatherTower weatherTower;
@@ -23,7 +25,7 @@ public class JetPlane extends Aircraft implements Flyable {
                 break;
         }
         if (coordinates.getHeight() > 100) {
-            coordinates.setHeight(100);
+            coordinates = new Coordinates(coordinates.getLongitude(), coordinates.getLatitude(), 100);
         } else if (coordinates.getHeight() <= 0) {
             weatherTower.unregister(this);
         }

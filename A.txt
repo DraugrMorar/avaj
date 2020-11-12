@@ -1,0 +1,9 @@
+New baloon with name: B1!
+New baloon with name: B2!
+New JetPlane with name: J1!
+New Helicopter with name: H1!
+New Helicopter with name: H2!
+New Helicopter with name: H3!
+New baloon with name: B3!
+New JetPlane with name: J2!
+New Helicopter with name: H4!

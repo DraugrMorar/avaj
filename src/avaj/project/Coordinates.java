@@ -1,3 +1,5 @@
+package avaj.project;
+
 public class Coordinates {
     private int longitude;
     private int latitude;
@@ -19,9 +21,5 @@ public class Coordinates {
 
     public int getHeight() {
         return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 }

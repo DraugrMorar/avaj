@@ -1,3 +1,5 @@
+package avaj.project;
+
 public class WeatherProvider {
 
     private static WeatherProvider weatherProvider = new WeatherProvider();

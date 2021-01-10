@@ -7,6 +7,7 @@ public class Avaj {
     static WeatherTower weatherTower;
     static PrintStream o;
     static PrintStream console = System.out;
+
     static {
         try {
             o = new PrintStream(new File("A.txt"));
@@ -15,6 +16,7 @@ public class Avaj {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
         if (args.length == 1) {
             read_from_file(args[0]);
@@ -55,7 +57,7 @@ public class Avaj {
 
                 createAircraft(buff);
             }
-            while(cycles > 0) {
+            while (cycles > 0) {
                 weatherTower.changeWeather();
                 cycles--;
             }
@@ -64,27 +66,27 @@ public class Avaj {
         }
     }
 
-    private static void createAircraft(String text) throws FileNotFoundException {
+    private static void createAircraft(String text) {
         long latitude;
         long longitude;
         long height;
-        if (text!= null && !text.isEmpty()) {
+        if (text != null && !text.isEmpty()) {
             String[] aircraft = text.split("\\s+");
             if (aircraft.length != 5 || aircraft[1].isEmpty()) {
                 error("Not valid string " + text);
             }
             if ((aircraft[0].equals("Baloon") || aircraft[0].equals("JetPlane") || aircraft[0].equals("Helicopter")) &&
                     (aircraft[2].matches("\\d+") && aircraft[3].matches("\\d+") && aircraft[4].matches("\\d+"))) {
-                    latitude= Long.parseLong(aircraft[2]);
-                    longitude = Long.parseLong(aircraft[3]);
-                    height = Long.parseLong(aircraft[4]);
-                    if (latitude > Integer.MAX_VALUE || longitude > Integer.MAX_VALUE || height > Integer.MAX_VALUE) {
-                        error("Wrong coordinates " + latitude + " " + longitude + " " + height);
-                    }
-                    if (height > 100) {
-                        height = 100;
-                    }
-                    AircraftFactory.newAircraft(aircraft[0], aircraft[1], (int)latitude, (int)longitude, (int)height).registerTower(weatherTower);
+                latitude = Long.parseLong(aircraft[2]);
+                longitude = Long.parseLong(aircraft[3]);
+                height = Long.parseLong(aircraft[4]);
+                if (latitude > Integer.MAX_VALUE || longitude > Integer.MAX_VALUE || height > Integer.MAX_VALUE) {
+                    error("Wrong coordinates " + latitude + " " + longitude + " " + height);
+                }
+                if (height > 100) {
+                    height = 100;
+                }
+                AircraftFactory.newAircraft(aircraft[0], aircraft[1], (int) latitude, (int) longitude, (int) height).registerTower(weatherTower);
             } else {
                 error("Wrong line " + text);
             }

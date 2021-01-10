@@ -29,7 +29,7 @@ public class Baloon extends Aircraft implements Flyable {
                 System.out.println(aircraft + "Бррр... Кажется у меня на носу сосулька");
                 break;
         }
-        if(coordinates.getHeight() > 100) {
+        if (coordinates.getHeight() > 100) {
             coordinates = new Coordinates(coordinates.getLongitude(), coordinates.getLatitude(), 100);
         } else if (coordinates.getHeight() <= 0) {
             System.out.println("Tower says: Baloon" + name + "(" + this.id + ") unregistered from weather tower");
